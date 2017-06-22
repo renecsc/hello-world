@@ -1,2 +1,3 @@
 # hello-world
-This is my hello-world repository.
+
+Hi there, I am just a novice developer that love code.
