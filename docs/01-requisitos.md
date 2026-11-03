@@ -1,7 +1,7 @@
 # Especificación de requisitos — Plataforma de diagnóstico automotriz multimarca
 
-> **Estado:** BORRADOR v0.1 — pendiente de revisión y aprobación del responsable de arquitectura.
-> Ningún requisito se implementa hasta que esté marcado como **Aprobado**.
+> **Estado:** v1.0 — requisitos aprobados por el responsable de arquitectura (2026-11-03).
+> Ningún requisito se implementa hasta que esté marcado como **Aprobado**. Los cambios posteriores se proponen como nuevas filas o con estado `Propuesto`.
 
 ## 0. Cómo leer este documento
 
@@ -74,9 +74,9 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 |---|---|---|---|---|
 | RU-20 | Quiero graficar **muchas señales simultáneamente** (objetivo ≥ 16, ver RNF-02). | M | 1 | Aprobado |
 | RU-21 | Quiero paneles apilados con **eje de tiempo sincronizado** (zoom/desplazamiento comunes). | M | 1 | Aprobado |
-| RU-22 | Quiero un **cursor común** que muestre el valor de todas las señales en un mismo instante. | M | 1 | Propuesto |
-| RU-23 | Quiero superponer señales en un mismo panel con ejes Y independientes. | S | 1 | Propuesto |
-| RU-24 | Quiero añadir **marcadores** durante la grabación (ej. "aquí tironea"). | S | 1 | Propuesto |
+| RU-22 | Quiero un **cursor común** que muestre el valor de todas las señales en un mismo instante. | M | 1 | Aprobado |
+| RU-23 | Quiero superponer señales en un mismo panel con ejes Y independientes. | S | 1 | Aprobado |
+| RU-24 | Quiero añadir **marcadores** durante la grabación (ej. "aquí tironea"). | S | 1 | Aprobado |
 
 ### 2.4 Grabación y análisis
 | ID | Requisito | Prior. | Fase | Estado |
@@ -107,7 +107,7 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 | RU-61 | Quiero que proponga un **plan de pruebas** ordenado por probabilidad y costo de verificación. | M | 2 | Aprobado |
 | RU-62 | Quiero que pueda **solicitar datos** adicionales (leer un parámetro, grabar una prueba). | S | 2 | Aprobado |
 | RU-63 | Quiero ver en qué datos se basa cada conclusión (trazabilidad, sin "caja negra"). | M | 2 | Aprobado |
-| RU-64 | Quiero que funcione en español. | M | 2 | Propuesto |
+| RU-64 | Quiero que funcione en español. | M | 2 | Aprobado |
 
 ### 2.8 Historial
 | ID | Requisito | Prior. | Fase | Estado |
@@ -120,67 +120,67 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 ## 3. Requisitos de sistema
 
 ### 3.1 Comunicación
-| ID | Requisito | Traza | Prior. | Fase |
-|---|---|---|---|---|
-| RS-01 | El sistema abstraerá el medio físico tras una interfaz `Transport` (Bluetooth SPP, BLE, WiFi/TCP, USB serie, SocketCAN). | RU-01 | M | 1 |
-| RS-02 | El sistema abstraerá el adaptador tras una interfaz `Adapter` (ELM327/STN, CAN nativo, J2534 en el futuro). | RU-01 | M | 1 |
-| RS-03 | El sistema soportará OBD2 sobre ISO 15765-4 (CAN 11/29 bits). Otros protocolos (K-Line, J1850) según adaptador. | RU-01 | M | 1 |
-| RS-04 | El sistema implementará UDS (ISO 14229) sobre ISO-TP: `0x10`, `0x19`, `0x14`, `0x22`, `0x3E`. Solo servicios de **lectura** + borrado de DTC. | RU-42 | M | 3 |
-| RS-05 | Toda la configuración de conexión (puerto, MAC, velocidad, timeouts, reintentos) vendrá de configuración, **nunca del código**. | RNF-06 | M | 1 |
-| RS-06 | El sistema incluirá un **simulador** que implementa `Adapter` y reproduce un vehículo definido por archivo. | RU-03 | M | 1 |
+| ID | Requisito | Traza | Prior. | Fase | Estado |
+|---|---|---|---|---|---|
+| RS-01 | El sistema abstraerá el medio físico tras una interfaz `Transport` (Bluetooth SPP, BLE, WiFi/TCP, USB serie, SocketCAN). | RU-01 | M | 1 | Aprobado |
+| RS-02 | El sistema abstraerá el adaptador tras una interfaz `Adapter` (ELM327/STN, CAN nativo, J2534 en el futuro). | RU-01 | M | 1 | Aprobado |
+| RS-03 | El sistema soportará OBD2 sobre ISO 15765-4 (CAN 11/29 bits). Otros protocolos (K-Line, J1850) según adaptador. | RU-01 | M | 1 | Aprobado |
+| RS-04 | El sistema implementará UDS (ISO 14229) sobre ISO-TP: `0x10`, `0x19`, `0x14`, `0x22`, `0x3E`. Solo servicios de **lectura** + borrado de DTC. | RU-42 | M | 3 | Aprobado |
+| RS-05 | Toda la configuración de conexión (puerto, MAC, velocidad, timeouts, reintentos) vendrá de configuración, **nunca del código**. | RNF-06 | M | 1 | Aprobado |
+| RS-06 | El sistema incluirá un **simulador** que implementa `Adapter` y reproduce un vehículo definido por archivo. | RU-03 | M | 1 | Aprobado |
 
 ### 3.2 Definiciones de datos (cero hardcoding)
-| ID | Requisito | Traza | Prior. | Fase |
-|---|---|---|---|---|
-| RS-10 | Los PIDs OBD2 estándar (SAE J1979) se definirán en archivos de datos (YAML), con fórmula, unidad y rango. | RU-10 | M | 1 |
-| RS-11 | Cada marca/plataforma tendrá un archivo de definición: ECUs (direcciones), buses, DIDs, DTC propietarios. | RU-42, RU-50 | M | 3 |
-| RS-12 | Las definiciones se validarán con un **esquema** al cargar; un error indica archivo, línea y causa. | RNF-06 | M | 1 |
-| RS-13 | Las fórmulas de conversión se expresarán en un lenguaje restringido y seguro (sin `eval` arbitrario). | RNF-05 | M | 1 |
-| RS-14 | Las descripciones de DTC se cargarán desde bases de datos de texto intercambiables (genérica + por marca). | RU-40 | M | 1 |
-| RS-15 | Las conversiones de unidades se definirán en un archivo de datos (`definitions/units.yaml`) agrupadas por magnitud (tensión, temperatura, presión…). Internamente se almacena siempre la unidad base de la definición; la conversión se aplica solo en presentación y exportación (la exportación indica la unidad en la cabecera). La preferencia por señal se guarda en la configuración del usuario. | RU-12, RU-15 | S | 1 |
+| ID | Requisito | Traza | Prior. | Fase | Estado |
+|---|---|---|---|---|---|
+| RS-10 | Los PIDs OBD2 estándar (SAE J1979) se definirán en archivos de datos (YAML), con fórmula, unidad y rango. | RU-10 | M | 1 | Aprobado |
+| RS-11 | Cada marca/plataforma tendrá un archivo de definición: ECUs (direcciones), buses, DIDs, DTC propietarios. | RU-42, RU-50 | M | 3 | Aprobado |
+| RS-12 | Las definiciones se validarán con un **esquema** al cargar; un error indica archivo, línea y causa. | RNF-06 | M | 1 | Aprobado |
+| RS-13 | Las fórmulas de conversión se expresarán en un lenguaje restringido y seguro (sin `eval` arbitrario). | RNF-05 | M | 1 | Aprobado |
+| RS-14 | Las descripciones de DTC se cargarán desde bases de datos de texto intercambiables (genérica + por marca). | RU-40 | M | 1 | Aprobado |
+| RS-15 | Las conversiones de unidades se definirán en un archivo de datos (`definitions/units.yaml`) agrupadas por magnitud (tensión, temperatura, presión…). Internamente se almacena siempre la unidad base de la definición; la conversión se aplica solo en presentación y exportación (la exportación indica la unidad en la cabecera). La preferencia por señal se guarda en la configuración del usuario. | RU-12, RU-15 | S | 1 | Aprobado |
 
 ### 3.3 Adquisición y almacenamiento
-| ID | Requisito | Traza | Prior. | Fase |
-|---|---|---|---|---|
-| RS-20 | Un planificador de sondeo (polling) priorizará las señales visibles/graficadas sobre el resto. | RU-10, RU-20 | M | 1 |
-| RS-21 | Cada muestra llevará marca de tiempo **monotónica** de adquisición. | RU-22 | M | 1 |
-| RS-22 | Las sesiones se guardarán en SQLite con formato documentado y versionado. | RU-30 | M | 1 |
-| RS-23 | Los datos se publicarán a la interfaz mediante WebSocket. | RU-10 | M | 1 |
+| ID | Requisito | Traza | Prior. | Fase | Estado |
+|---|---|---|---|---|---|
+| RS-20 | Un planificador de sondeo (polling) priorizará las señales visibles/graficadas sobre el resto. | RU-10, RU-20 | M | 1 | Aprobado |
+| RS-21 | Cada muestra llevará marca de tiempo **monotónica** de adquisición. | RU-22 | M | 1 | Aprobado |
+| RS-22 | Las sesiones se guardarán en SQLite con formato documentado y versionado. | RU-30 | M | 1 | Aprobado |
+| RS-23 | Los datos se publicarán a la interfaz mediante WebSocket. | RU-10 | M | 1 | Aprobado |
 
 ### 3.4 Topología
-| ID | Requisito | Traza | Prior. | Fase |
-|---|---|---|---|---|
-| RS-30 | El escaneo de topología combinará (a) ECUs declaradas en la definición de marca y (b) descubrimiento activo opcional por barrido de direcciones con `TesterPresent`. | RU-50, RU-53 | M | 3 |
-| RS-31 | El barrido activo será configurable (rango, timeout) y **desactivado por defecto**. | RNF-04 | M | 3 |
-| RS-32 | La disposición del grafo (buses, gateway, posición) vendrá de la definición de marca; si no existe, se usa disposición automática. | RU-50 | M | 3 |
+| ID | Requisito | Traza | Prior. | Fase | Estado |
+|---|---|---|---|---|---|
+| RS-30 | El escaneo de topología combinará (a) ECUs declaradas en la definición de marca y (b) descubrimiento activo opcional por barrido de direcciones con `TesterPresent`. | RU-50, RU-53 | M | 3 | Aprobado |
+| RS-31 | El barrido activo será configurable (rango, timeout) y **desactivado por defecto**. | RNF-04 | M | 3 | Aprobado |
+| RS-32 | La disposición del grafo (buses, gateway, posición) vendrá de la definición de marca; si no existe, se usa disposición automática. | RU-50 | M | 3 | Aprobado |
 
 ### 3.5 Asistente IA
-| ID | Requisito | Traza | Prior. | Fase |
-|---|---|---|---|---|
-| RS-40 | El proveedor de IA estará tras una interfaz `AIProvider`; proveedor y modelo se eligen por configuración. | RU-60 | M | 2 |
-| RS-41 | Un **motor de reglas** determinista (reglas en YAML) pre-analizará los datos y entregará hallazgos a la IA. | RU-60, RU-63 | M | 2 |
-| RS-42 | Se enviará a la IA un **resumen estadístico** de la sesión, no la serie completa. | RNF-03 | M | 2 |
-| RS-43 | La IA podrá invocar herramientas definidas (`leer_parametro`, `leer_dtc`, `iniciar_grabacion`…) que siempre requieren confirmación del técnico si interactúan con el vehículo. | RU-62, RNF-04 | S | 2 |
-| RS-44 | Las plantillas de prompt estarán en archivos, no en el código. | RNF-06 | M | 2 |
-| RS-45 | Las claves de API se leerán de variables de entorno o almacén seguro, nunca de archivos versionados. | RNF-05 | M | 2 |
+| ID | Requisito | Traza | Prior. | Fase | Estado |
+|---|---|---|---|---|---|
+| RS-40 | El proveedor de IA estará tras una interfaz `AIProvider`; proveedor y modelo se eligen por configuración. | RU-60 | M | 2 | Aprobado |
+| RS-41 | Un **motor de reglas** determinista (reglas en YAML) pre-analizará los datos y entregará hallazgos a la IA. | RU-60, RU-63 | M | 2 | Aprobado |
+| RS-42 | Se enviará a la IA un **resumen estadístico** de la sesión, no la serie completa. | RNF-03 | M | 2 | Aprobado |
+| RS-43 | La IA podrá invocar herramientas definidas (`leer_parametro`, `leer_dtc`, `iniciar_grabacion`…) que siempre requieren confirmación del técnico si interactúan con el vehículo. | RU-62, RNF-04 | S | 2 | Aprobado |
+| RS-44 | Las plantillas de prompt estarán en archivos, no en el código. | RNF-06 | M | 2 | Aprobado |
+| RS-45 | Las claves de API se leerán de variables de entorno o almacén seguro, nunca de archivos versionados. | RNF-05 | M | 2 | Aprobado |
 
 ---
 
 ## 4. Requisitos no funcionales
 
-| ID | Requisito | Prior. |
-|---|---|---|
-| RNF-01 | **Latencia de interfaz:** un valor nuevo se muestra en < 200 ms desde su adquisición. | M |
-| RNF-02 | **Gráficas:** ≥ 16 señales simultáneas a 30 fps en una tablet Android de gama media. | M |
-| RNF-03 | **Privacidad:** el VIN y datos del cliente se pueden anonimizar antes de enviarse a la IA (configurable). | M |
-| RNF-04 | **Seguridad del vehículo:** solo servicios de lectura por defecto; toda acción con efecto requiere confirmación explícita. Nunca se envían comandos con el vehículo en movimiento salvo lectura. | M |
-| RNF-05 | **Seguridad del software:** sin `eval` de datos externos, secretos fuera del repositorio. | M |
-| RNF-06 | **Cero hardcoding:** constantes de protocolo estándar viven en módulos de constantes con nombre y referencia a la norma; todo lo demás (configuración, definiciones, reglas, prompts, textos) en archivos de datos. | M |
-| RNF-07 | **Funcionamiento offline:** todo excepto el asistente IA funciona sin internet. | M |
-| RNF-08 | **Documentación:** cada módulo con docstring de propósito; cada función pública documentada (parámetros, retorno, errores); referencias a normas (ISO/SAE) en el código de protocolo. | M |
-| RNF-09 | **Pruebas:** cobertura ≥ 80 % en capas de protocolo y decodificación, usando el simulador. | S |
-| RNF-10 | **Extensibilidad:** añadir una marca nueva no requiere modificar código, solo agregar un archivo de definición. | M |
-| RNF-11 | **Idioma:** interfaz y mensajes en español; textos externalizados (i18n). | S |
+| ID | Requisito | Prior. | Estado |
+|---|---|---|---|
+| RNF-01 | **Latencia de interfaz:** un valor nuevo se muestra en < 200 ms desde su adquisición. | M | Aprobado |
+| RNF-02 | **Gráficas:** ≥ 16 señales simultáneas a 30 fps en una tablet Android de gama media. | M | Aprobado |
+| RNF-03 | **Privacidad:** el VIN y datos del cliente se pueden anonimizar antes de enviarse a la IA (configurable). | M | Aprobado |
+| RNF-04 | **Seguridad del vehículo:** solo servicios de lectura por defecto; toda acción con efecto requiere confirmación explícita. Nunca se envían comandos con el vehículo en movimiento salvo lectura. | M | Aprobado |
+| RNF-05 | **Seguridad del software:** sin `eval` de datos externos, secretos fuera del repositorio. | M | Aprobado |
+| RNF-06 | **Cero hardcoding:** constantes de protocolo estándar viven en módulos de constantes con nombre y referencia a la norma; todo lo demás (configuración, definiciones, reglas, prompts, textos) en archivos de datos. | M | Aprobado |
+| RNF-07 | **Funcionamiento offline:** todo excepto el asistente IA funciona sin internet. | M | Aprobado |
+| RNF-08 | **Documentación:** cada módulo con docstring de propósito; cada función pública documentada (parámetros, retorno, errores); referencias a normas (ISO/SAE) en el código de protocolo. | M | Aprobado |
+| RNF-09 | **Pruebas:** cobertura ≥ 80 % en capas de protocolo y decodificación, usando el simulador. | S | Aprobado |
+| RNF-10 | **Extensibilidad:** añadir una marca nueva no requiere modificar código, solo agregar un archivo de definición. | M | Aprobado |
+| RNF-11 | **Idioma:** interfaz y mensajes en español; textos externalizados (i18n). | S | Aprobado |
 
 ---
 
