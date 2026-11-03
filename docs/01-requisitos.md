@@ -55,24 +55,25 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 ### 2.1 Conexión y vehículo
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-01 | Como técnico, quiero conectarme al vehículo con un adaptador estándar desde Linux o Android. | M | 1 | Propuesto |
-| RU-02 | Quiero que se identifique el vehículo (VIN, protocolo, ECUs presentes) automáticamente cuando sea posible. | M | 1 | Propuesto |
-| RU-03 | Quiero poder trabajar **sin vehículo** (simulador / reproducción de grabaciones) para practicar, desarrollar y analizar. | M | 1 | Propuesto |
+| RU-01 | Como técnico, quiero conectarme al vehículo con un adaptador estándar desde Linux o Android. | M | 1 | Aprobado |
+| RU-02 | Quiero que se identifique el vehículo (VIN, protocolo, ECUs presentes) automáticamente cuando sea posible. | M | 1 | Aprobado |
+| RU-03 | Quiero poder trabajar **sin vehículo** (simulador / reproducción de grabaciones) para practicar, desarrollar y analizar. | M | 1 | Aprobado |
 
 ### 2.2 Datos en vivo
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-10 | Quiero ver **todos** los parámetros disponibles en una sola lista, sin paginación. | M | 1 | Propuesto |
-| RU-11 | Quiero buscar, filtrar y ordenar los parámetros. | M | 1 | Propuesto |
-| RU-12 | Quiero ver mín./máx./media de cada parámetro durante la sesión. | S | 1 | Propuesto |
-| RU-13 | Quiero que los valores fuera de rango esperado se resalten. | S | 2 | Propuesto |
-| RU-14 | Quiero guardar **plantillas** de parámetros por tipo de avería (ej. "mezcla pobre"). | S | 1 | Propuesto |
+| RU-10 | Quiero ver **todos** los parámetros disponibles en una sola lista, sin paginación. | M | 1 | Aprobado |
+| RU-11 | Quiero buscar, filtrar y ordenar los parámetros. | M | 1 | Aprobado |
+| RU-12 | Quiero ver mín./máx./media de cada parámetro durante la sesión. | S | 1 | Aprobado |
+| RU-13 | Quiero que los valores fuera de rango esperado se resalten. | S | 2 | Aprobado |
+| RU-14 | Quiero guardar **plantillas** de parámetros por tipo de avería (ej. "mezcla pobre"). | S | 1 | Aprobado |
+| RU-15 | Quiero **cambiar la unidad de visualización** de cada parámetro (ej. V ↔ mV, °C ↔ °F, kPa ↔ psi ↔ bar), y que la elección se recuerde y se aplique también a gráficas, estadísticas y exportación. | S | 1 | Aprobado |
 
 ### 2.3 Gráficas
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-20 | Quiero graficar **muchas señales simultáneamente** (objetivo ≥ 16, ver RNF-02). | M | 1 | Propuesto |
-| RU-21 | Quiero paneles apilados con **eje de tiempo sincronizado** (zoom/desplazamiento comunes). | M | 1 | Propuesto |
+| RU-20 | Quiero graficar **muchas señales simultáneamente** (objetivo ≥ 16, ver RNF-02). | M | 1 | Aprobado |
+| RU-21 | Quiero paneles apilados con **eje de tiempo sincronizado** (zoom/desplazamiento comunes). | M | 1 | Aprobado |
 | RU-22 | Quiero un **cursor común** que muestre el valor de todas las señales en un mismo instante. | M | 1 | Propuesto |
 | RU-23 | Quiero superponer señales en un mismo panel con ejes Y independientes. | S | 1 | Propuesto |
 | RU-24 | Quiero añadir **marcadores** durante la grabación (ej. "aquí tironea"). | S | 1 | Propuesto |
@@ -80,39 +81,39 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 ### 2.4 Grabación y análisis
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-30 | Quiero grabar sesiones de datos en vivo y reproducirlas después. | M | 1 | Propuesto |
-| RU-31 | Quiero exportar sesiones a CSV. | M | 1 | Propuesto |
-| RU-32 | Quiero comparar dos sesiones (antes/después, o vs. vehículo sano). | C | 4 | Propuesto |
+| RU-30 | Quiero grabar sesiones de datos en vivo y reproducirlas después. | M | 1 | Aprobado |
+| RU-31 | Quiero exportar sesiones a CSV. | M | 1 | Aprobado |
+| RU-32 | Quiero comparar dos sesiones (antes/después, o vs. vehículo sano). | C | 4 | Aprobado |
 
 ### 2.5 Códigos de avería
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-40 | Quiero leer y borrar códigos OBD2 genéricos (modos 03/07/0A/04). | M | 1 | Propuesto |
-| RU-41 | Quiero ver el **freeze frame** asociado a cada código. | M | 1 | Propuesto |
-| RU-42 | Quiero leer códigos de **todos los módulos** (ABS, SRS, BCM, TCM…) vía UDS/KWP. | M | 3 | Propuesto |
+| RU-40 | Quiero leer y borrar códigos OBD2 genéricos (modos 03/07/0A/04). | M | 1 | Aprobado |
+| RU-41 | Quiero ver el **freeze frame** asociado a cada código. | M | 1 | Aprobado |
+| RU-42 | Quiero leer códigos de **todos los módulos** (ABS, SRS, BCM, TCM…) vía UDS/KWP. | M | 3 | Aprobado |
 
 ### 2.6 Mapa topológico
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-50 | Quiero ver un **mapa topológico** de los módulos del vehículo y los buses que los conectan. | M | 3 | Propuesto |
-| RU-51 | Quiero ver el estado de cada módulo por color: sin fallas / con fallas / sin respuesta / no verificado. | M | 3 | Propuesto |
-| RU-52 | Quiero hacer clic en un módulo para ver sus códigos, identificación y datos en vivo. | S | 3 | Propuesto |
-| RU-53 | Quiero que módulos que responden pero no están en la definición de la marca aparezcan como "desconocidos". | S | 3 | Propuesto |
+| RU-50 | Quiero ver un **mapa topológico** de los módulos del vehículo y los buses que los conectan. | M | 3 | Aprobado |
+| RU-51 | Quiero ver el estado de cada módulo por color: sin fallas / con fallas / sin respuesta / no verificado. | M | 3 | Aprobado |
+| RU-52 | Quiero hacer clic en un módulo para ver sus códigos, identificación y datos en vivo. | S | 3 | Aprobado |
+| RU-53 | Quiero que módulos que responden pero no están en la definición de la marca aparezcan como "desconocidos". | S | 3 | Aprobado |
 
 ### 2.7 Asistente de diagnóstico con IA
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-60 | Quiero que el asistente razone con **contexto completo**: vehículo, códigos, freeze frame, datos en vivo, síntomas e historial. | M | 2 | Propuesto |
-| RU-61 | Quiero que proponga un **plan de pruebas** ordenado por probabilidad y costo de verificación. | M | 2 | Propuesto |
-| RU-62 | Quiero que pueda **solicitar datos** adicionales (leer un parámetro, grabar una prueba). | S | 2 | Propuesto |
-| RU-63 | Quiero ver en qué datos se basa cada conclusión (trazabilidad, sin "caja negra"). | M | 2 | Propuesto |
+| RU-60 | Quiero que el asistente razone con **contexto completo**: vehículo, códigos, freeze frame, datos en vivo, síntomas e historial. | M | 2 | Aprobado |
+| RU-61 | Quiero que proponga un **plan de pruebas** ordenado por probabilidad y costo de verificación. | M | 2 | Aprobado |
+| RU-62 | Quiero que pueda **solicitar datos** adicionales (leer un parámetro, grabar una prueba). | S | 2 | Aprobado |
+| RU-63 | Quiero ver en qué datos se basa cada conclusión (trazabilidad, sin "caja negra"). | M | 2 | Aprobado |
 | RU-64 | Quiero que funcione en español. | M | 2 | Propuesto |
 
 ### 2.8 Historial
 | ID | Requisito | Prior. | Fase | Estado |
 |---|---|---|---|---|
-| RU-70 | Quiero un historial por vehículo (VIN/patente) con sesiones, códigos y reparaciones. | S | 4 | Propuesto |
-| RU-71 | Quiero generar un informe (PDF) para el cliente. | C | 4 | Propuesto |
+| RU-70 | Quiero un historial por vehículo (VIN/patente) con sesiones, códigos y reparaciones. | S | 4 | Aprobado |
+| RU-71 | Quiero generar un informe (PDF) para el cliente. | C | 4 | Aprobado |
 
 ---
 
@@ -136,6 +137,7 @@ que **complementa** (no reemplaza) a la herramienta comercial.
 | RS-12 | Las definiciones se validarán con un **esquema** al cargar; un error indica archivo, línea y causa. | RNF-06 | M | 1 |
 | RS-13 | Las fórmulas de conversión se expresarán en un lenguaje restringido y seguro (sin `eval` arbitrario). | RNF-05 | M | 1 |
 | RS-14 | Las descripciones de DTC se cargarán desde bases de datos de texto intercambiables (genérica + por marca). | RU-40 | M | 1 |
+| RS-15 | Las conversiones de unidades se definirán en un archivo de datos (`definitions/units.yaml`) agrupadas por magnitud (tensión, temperatura, presión…). Internamente se almacena siempre la unidad base de la definición; la conversión se aplica solo en presentación y exportación (la exportación indica la unidad en la cabecera). La preferencia por señal se guarda en la configuración del usuario. | RU-12, RU-15 | S | 1 |
 
 ### 3.3 Adquisición y almacenamiento
 | ID | Requisito | Traza | Prior. | Fase |
