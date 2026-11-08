@@ -1,0 +1,271 @@
+# PIDs OBD2 estándar del servicio 01 (datos actuales) — SAE J1979 / ISO 15031-5, Anexo A.
+#
+# Estructura:
+#   - id:      PID en hexadecimal, SIEMPRE entre comillas (sin ellas "10" se leería como el
+#              número decimal 10).
+#     bytes:   cantidad de bytes de datos que devuelve la ECU para este PID.
+#     signals: una o más señales que se extraen de esos bytes. Cada señal:
+#       key:      identificador estable (se usa en plantillas, reglas y grabaciones; no cambiarlo).
+#       name:     nombre visible por idioma.
+#       formula:  conversión de bytes a valor físico. Variables: A = 1.er byte, B = 2.º, ...
+#                 Funciones: min, max, abs, bit(x, n), signed(x, bits).
+#       unit:     unidad base (debe existir en definitions/units.yaml).
+#       range:    rango físico que puede codificar el PID según la norma.
+#       category: agrupación para filtrar en la UI.
+#
+# Los rangos *esperados* para un motor sano (para resaltar anomalías, RU-13) NO van aquí:
+# dependen del vehículo y se definen en las reglas de análisis (fase 2).
+schema_version: 1
+
+pids:
+  - id: "04"
+    bytes: 1
+    signals:
+      - key: engine_load
+        name: { es: "Carga calculada del motor", en: "Calculated engine load" }
+        formula: "A * 100 / 255"
+        unit: "%"
+        range: { min: 0, max: 100 }
+        category: engine
+
+  - id: "05"
+    bytes: 1
+    signals:
+      - key: coolant_temp
+        name: { es: "Temperatura del refrigerante", en: "Engine coolant temperature" }
+        formula: "A - 40"
+        unit: "°C"
+        range: { min: -40, max: 215 }
+        category: engine
+
+  - id: "06"
+    bytes: 1
+    signals:
+      - key: stft_b1
+        name: { es: "Corrección de combustible corto plazo B1", en: "Short term fuel trim B1" }
+        formula: "(A - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: fuel
+
+  - id: "07"
+    bytes: 1
+    signals:
+      - key: ltft_b1
+        name: { es: "Corrección de combustible largo plazo B1", en: "Long term fuel trim B1" }
+        formula: "(A - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: fuel
+
+  - id: "08"
+    bytes: 1
+    signals:
+      - key: stft_b2
+        name: { es: "Corrección de combustible corto plazo B2", en: "Short term fuel trim B2" }
+        formula: "(A - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: fuel
+
+  - id: "09"
+    bytes: 1
+    signals:
+      - key: ltft_b2
+        name: { es: "Corrección de combustible largo plazo B2", en: "Long term fuel trim B2" }
+        formula: "(A - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: fuel
+
+  - id: "0A"
+    bytes: 1
+    signals:
+      - key: fuel_pressure
+        name: { es: "Presión de combustible (manométrica)", en: "Fuel pressure (gauge)" }
+        formula: "A * 3"
+        unit: "kPa"
+        range: { min: 0, max: 765 }
+        category: fuel
+
+  - id: "0B"
+    bytes: 1
+    signals:
+      - key: map
+        name: { es: "Presión absoluta del colector (MAP)", en: "Intake manifold absolute pressure" }
+        formula: "A"
+        unit: "kPa"
+        range: { min: 0, max: 255 }
+        category: air
+
+  - id: "0C"
+    bytes: 2
+    signals:
+      - key: engine_rpm
+        name: { es: "RPM del motor", en: "Engine speed" }
+        formula: "(A * 256 + B) / 4"
+        unit: "rpm"
+        range: { min: 0, max: 16383.75 }
+        category: engine
+
+  - id: "0D"
+    bytes: 1
+    signals:
+      - key: vehicle_speed
+        name: { es: "Velocidad del vehículo", en: "Vehicle speed" }
+        formula: "A"
+        unit: "km/h"
+        range: { min: 0, max: 255 }
+        category: vehicle
+
+  - id: "0E"
+    bytes: 1
+    signals:
+      - key: timing_advance
+        name: { es: "Avance de encendido (cil. 1)", en: "Timing advance (cyl. 1)" }
+        formula: "A / 2 - 64"
+        unit: "°"
+        range: { min: -64, max: 63.5 }
+        category: engine
+
+  - id: "0F"
+    bytes: 1
+    signals:
+      - key: intake_air_temp
+        name: { es: "Temperatura del aire de admisión", en: "Intake air temperature" }
+        formula: "A - 40"
+        unit: "°C"
+        range: { min: -40, max: 215 }
+        category: air
+
+  - id: "10"
+    bytes: 2
+    signals:
+      - key: maf
+        name: { es: "Caudal de aire (MAF)", en: "Mass air flow rate" }
+        formula: "(A * 256 + B) / 100"
+        unit: "g/s"
+        range: { min: 0, max: 655.35 }
+        category: air
+
+  - id: "11"
+    bytes: 1
+    signals:
+      - key: throttle_position
+        name: { es: "Posición absoluta del acelerador", en: "Absolute throttle position" }
+        formula: "A * 100 / 255"
+        unit: "%"
+        range: { min: 0, max: 100 }
+        category: air
+
+  - id: "14"
+    bytes: 2
+    signals:
+      - key: o2_b1s1_voltage
+        name: { es: "Sonda O2 B1S1 — tensión", en: "O2 sensor B1S1 — voltage" }
+        formula: "A / 200"
+        unit: "V"
+        range: { min: 0, max: 1.275 }
+        category: emissions
+      - key: o2_b1s1_trim
+        name: { es: "Sonda O2 B1S1 — corrección", en: "O2 sensor B1S1 — fuel trim" }
+        formula: "(B - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: emissions
+
+  - id: "15"
+    bytes: 2
+    signals:
+      - key: o2_b1s2_voltage
+        name: { es: "Sonda O2 B1S2 — tensión", en: "O2 sensor B1S2 — voltage" }
+        formula: "A / 200"
+        unit: "V"
+        range: { min: 0, max: 1.275 }
+        category: emissions
+      - key: o2_b1s2_trim
+        name: { es: "Sonda O2 B1S2 — corrección", en: "O2 sensor B1S2 — fuel trim" }
+        formula: "(B - 128) * 100 / 128"
+        unit: "%"
+        range: { min: -100, max: 99.21875 }
+        category: emissions
+
+  - id: "1F"
+    bytes: 2
+    signals:
+      - key: run_time
+        name: { es: "Tiempo desde el arranque", en: "Run time since engine start" }
+        formula: "A * 256 + B"
+        unit: "s"
+        range: { min: 0, max: 65535 }
+        category: engine
+
+  - id: "21"
+    bytes: 2
+    signals:
+      - key: distance_with_mil
+        name: { es: "Distancia con MIL encendida", en: "Distance traveled with MIL on" }
+        formula: "A * 256 + B"
+        unit: "km"
+        range: { min: 0, max: 65535 }
+        category: vehicle
+
+  - id: "2F"
+    bytes: 1
+    signals:
+      - key: fuel_level
+        name: { es: "Nivel de combustible", en: "Fuel tank level input" }
+        formula: "A * 100 / 255"
+        unit: "%"
+        range: { min: 0, max: 100 }
+        category: fuel
+
+  - id: "31"
+    bytes: 2
+    signals:
+      - key: distance_since_clear
+        name: { es: "Distancia desde borrado de DTC", en: "Distance since codes cleared" }
+        formula: "A * 256 + B"
+        unit: "km"
+        range: { min: 0, max: 65535 }
+        category: vehicle
+
+  - id: "33"
+    bytes: 1
+    signals:
+      - key: baro_pressure
+        name: { es: "Presión barométrica", en: "Absolute barometric pressure" }
+        formula: "A"
+        unit: "kPa"
+        range: { min: 0, max: 255 }
+        category: air
+
+  - id: "42"
+    bytes: 2
+    signals:
+      - key: module_voltage
+        name: { es: "Tensión del módulo de control", en: "Control module voltage" }
+        formula: "(A * 256 + B) / 1000"
+        unit: "V"
+        range: { min: 0, max: 65.535 }
+        category: electrical
+
+  - id: "46"
+    bytes: 1
+    signals:
+      - key: ambient_air_temp
+        name: { es: "Temperatura ambiente", en: "Ambient air temperature" }
+        formula: "A - 40"
+        unit: "°C"
+        range: { min: -40, max: 215 }
+        category: air
+
+  - id: "5C"
+    bytes: 1
+    signals:
+      - key: oil_temp
+        name: { es: "Temperatura del aceite", en: "Engine oil temperature" }
+        formula: "A - 40"
+        unit: "°C"
+        range: { min: -40, max: 215 }
+        category: engine

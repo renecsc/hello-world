@@ -1,0 +1,69 @@
+# Vehículo simulado: motor gasolina 4 cilindros con TOMA DE AIRE (caso de práctica).
+#
+# Síntomas que reproduce:
+#   - P0171 (sistema muy pobre, banco 1) almacenado, con freeze frame en ralentí.
+#   - LTFT B1 alto (~ +18 %) y STFT oscilando positivo: la ECU agrega combustible.
+#   - MAF bajo para la carga, ralentí algo inestable.
+#
+# Generadores disponibles: constant, sine, ramp, random_walk (ver
+# src/diag/infra/simulator/generators.py). Todos aceptan "noise" (desviación estándar).
+#
+# Regla: si un PID tiene varias señales (p. ej. la sonda O2 "14"), hay que configurarlas todas.
+schema_version: 1
+name: "Gasolina 4 cil. — toma de aire (práctica)"
+vin: "SIM00000000000001"
+protocol: "ISO 15765-4 CAN 11 bits 500 kbit/s (simulado)"
+has_can_count_byte: true
+
+ecus:
+  - name: "ECM — motor"
+    request_id: 0x7E0
+    response_id: 0x7E8
+    provides_vin: true
+    signals:
+      engine_rpm:        { generator: sine, offset: 760, amplitude: 35, period_s: 3.7, noise: 8 }
+      engine_load:       { generator: random_walk, start: 24, step: 0.6, min: 20, max: 30 }
+      coolant_temp:      { generator: ramp, start: 35, end: 91, duration_s: 240, noise: 0.2 }
+      intake_air_temp:   { generator: constant, value: 31, noise: 0.3 }
+      ambient_air_temp:  { generator: constant, value: 19 }
+      oil_temp:          { generator: ramp, start: 30, end: 88, duration_s: 300 }
+      stft_b1:           { generator: sine, offset: 6, amplitude: 4, period_s: 1.3, noise: 0.8 }
+      ltft_b1:           { generator: constant, value: 18 }
+      map:               { generator: sine, offset: 36, amplitude: 1.5, period_s: 3.7 }
+      baro_pressure:     { generator: constant, value: 95 }
+      maf:               { generator: sine, offset: 2.2, amplitude: 0.15, period_s: 3.7, noise: 0.03 }
+      throttle_position: { generator: constant, value: 14.5, noise: 0.1 }
+      timing_advance:    { generator: random_walk, start: 12, step: 0.8, min: 8, max: 16 }
+      vehicle_speed:     { generator: constant, value: 0 }
+      o2_b1s1_voltage:   { generator: sine, offset: 0.42, amplitude: 0.32, period_s: 1.3, noise: 0.02 }
+      o2_b1s1_trim:      { generator: sine, offset: 6, amplitude: 4, period_s: 1.3 }
+      o2_b1s2_voltage:   { generator: constant, value: 0.62, noise: 0.01 }
+      o2_b1s2_trim:      { generator: constant, value: 0 }
+      module_voltage:    { generator: constant, value: 14.1, noise: 0.03 }
+      fuel_level:        { generator: constant, value: 42 }
+      run_time:          { generator: ramp, start: 0, end: 3600, duration_s: 3600 }
+      distance_with_mil: { generator: constant, value: 127 }
+      distance_since_clear: { generator: constant, value: 2310 }
+    dtcs:
+      stored: ["P0171"]
+      pending: []
+      permanent: ["P0171"]
+    freeze_frame:
+      dtc: "P0171"
+      values:
+        engine_rpm: 742
+        engine_load: 23.1
+        coolant_temp: 89
+        stft_b1: 9.4
+        ltft_b1: 18.0
+        map: 35
+        maf: 2.15
+        vehicle_speed: 0
+        intake_air_temp: 33
+
+  - name: "TCM — transmisión"
+    request_id: 0x7E1
+    response_id: 0x7E9
+    signals:
+      vehicle_speed:  { generator: constant, value: 0 }
+      module_voltage: { generator: constant, value: 14.0, noise: 0.03 }

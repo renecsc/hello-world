@@ -1,0 +1,24 @@
+# Configuración por defecto (versionada). Precedencia, el último gana:
+#   1. config/default.yaml      (este archivo)
+#   2. config/local.yaml        (por equipo, NO versionado; copiar desde aquí lo que se quiera cambiar)
+#   3. Variables de entorno     DIAG_<SECCIÓN>__<CLAVE>, p. ej. DIAG_SIMULATOR__SEED=42
+#
+# Las rutas relativas se resuelven respecto a la raíz del proyecto (la carpeta que contiene config/).
+
+definitions:
+  units: definitions/units.yaml
+  pids: definitions/obd2/pids.yaml
+
+obd2:
+  # PIDs por petición del servicio 01 (1-6). Bajar a 1 si un adaptador/ECU antiguo falla.
+  max_pids_per_request: 6
+
+simulator:
+  vehicle: definitions/vehicles/sim/gasolina_4cil_toma_aire.yaml
+  # Retardo artificial por petición, en segundos, para imitar la latencia del bus real.
+  response_delay_s: 0.02
+  # Semilla de los generadores aleatorios; null = distinta en cada ejecución.
+  seed: null
+
+logging:
+  level: INFO

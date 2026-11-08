@@ -1,0 +1,82 @@
+# Unidades de visualización (RS-15).
+#
+# Cada magnitud declara su unidad base y las unidades disponibles. Para cada unidad:
+#     valor_en_unidad = valor_en_base * factor + offset      (offset por defecto: 0)
+#
+# Para agregar una unidad basta con añadir una línea aquí; no se toca el código.
+schema_version: 1
+
+quantities:
+  voltage:
+    name: { es: "Tensión", en: "Voltage" }
+    base: "V"
+    units:
+      "V":  { factor: 1 }
+      "mV": { factor: 1000 }
+
+  temperature:
+    name: { es: "Temperatura", en: "Temperature" }
+    base: "°C"
+    units:
+      "°C": { factor: 1 }
+      "°F": { factor: 1.8, offset: 32 }
+      "K":  { factor: 1, offset: 273.15 }
+
+  pressure:
+    name: { es: "Presión", en: "Pressure" }
+    base: "kPa"
+    units:
+      "kPa":  { factor: 1 }
+      "bar":  { factor: 0.01 }
+      "mbar": { factor: 10 }
+      "psi":  { factor: 0.1450377377 }
+      "inHg": { factor: 0.2952998751 }
+
+  speed:
+    name: { es: "Velocidad", en: "Speed" }
+    base: "km/h"
+    units:
+      "km/h": { factor: 1 }
+      "mph":  { factor: 0.6213711922 }
+      "m/s":  { factor: 0.2777777778 }
+
+  rotational_speed:
+    name: { es: "Velocidad de giro", en: "Rotational speed" }
+    base: "rpm"
+    units:
+      "rpm": { factor: 1 }
+
+  mass_flow:
+    name: { es: "Caudal másico", en: "Mass flow" }
+    base: "g/s"
+    units:
+      "g/s":    { factor: 1 }
+      "kg/h":   { factor: 3.6 }
+      "lb/min": { factor: 0.1322773573 }
+
+  ratio:
+    name: { es: "Porcentaje", en: "Percentage" }
+    base: "%"
+    units:
+      "%": { factor: 1 }
+
+  angle:
+    name: { es: "Ángulo", en: "Angle" }
+    base: "°"
+    units:
+      "°": { factor: 1 }
+
+  time:
+    name: { es: "Tiempo", en: "Time" }
+    base: "s"
+    units:
+      "s":   { factor: 1 }
+      "min": { factor: 0.0166666667 }
+      "h":   { factor: 0.0002777778 }
+
+  distance:
+    name: { es: "Distancia", en: "Distance" }
+    base: "km"
+    units:
+      "km": { factor: 1 }
+      "mi": { factor: 0.6213711922 }
