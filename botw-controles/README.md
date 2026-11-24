@@ -58,6 +58,7 @@ bind_pad_y = north
 
 Cambia saltar (X) por correr/cancelar (B). Saltas con el botón de abajo (B de Switch, A de Xbox) y corres o cancelas
 con el de arriba (X de Switch, Y de Xbox). A e Y se quedan donde estaban.
+En un mando Xbox queda así: saltar con A, correr con Y, acción con B y atacar con X.
 
 En los menús, “atrás” también pasa al botón de arriba.
 
@@ -75,15 +76,4 @@ bind_pad_x = south
 bind_pad_b = north
 bind_pad_r = rtrigger
 bind_pad_zr = rshoulder
-```
-
-## Preset 4: Xbox por letra, saltar con A y correr con Y
-
-Pensado para mandos Xbox: el preset 1 con saltar y correr cambiados.
-
-```ini
-bind_pad_a = south
-bind_pad_x = east
-bind_pad_b = north
-bind_pad_y = west
 ```
