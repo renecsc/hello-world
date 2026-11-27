@@ -34,6 +34,6 @@ For reference, lowering the scene from 1600x900 to 1500x675 (SGSR 1 to 720p) in 
 ### Two smaller notes
 
 - `nvnCommandBufferDiscardDepthStencil` is a no-op (cmdbuf.c), and every pass stores depth (`storeOp = STORE`). Honouring the discard (a look-ahead like the clear-load one, only when no split or in-place read can reopen the pass) would save a depth store per pass on tilers. I haven't measured it.
-- About the PanVK reboot in my first post: the comment in device.c about #118 (Mali-G610 r56p0: "the 3 GB heap imported at once … froze Android") matches what happened here with PanVK placing 3,120 MB at once. So the hang is probably the Mali kernel driver with one huge GPU allocation, not PanVK as such. Placing the heap in parts (as Swap2-Native's `low_ram_place_part_mb` does) might make the placed path usable on Mali.
+- About the PanVK reboot in my first post: the comment in device.c about #118 (Mali-G610 r56p0: "the 3 GB heap imported at once … froze Android") matches what happened here with PanVK placing 3,120 MB at once. So the hang is probably the Mali kernel driver with one huge GPU allocation, not PanVK as such. Placing the heap in parts (Banana Native and Swap2-Native have a `low_ram_place_part_mb` policy along those lines) might make the placed path usable on Mali.
 
 Logs: the GPUPROF/VK_PROF session and the A/B session (3.7 MB).
